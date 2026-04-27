@@ -7,8 +7,8 @@ from src.network import Mode, Route, Stop, Network
 class FileLoader:
     def _load_stops(self, filepath: str) -> List[Stop]:
         """
-        从CSV文件加载站点数据
-        CSV格式: id,name
+        Load stop data from a CSV file.
+        CSV format: id,name
         """
         stops = []
         try:
@@ -20,25 +20,25 @@ class FileLoader:
                         name=row['name'].strip()
                     )
                     stops.append(stop)
-            print(f"成功加载 {len(stops)} 个站点")
+            print(f"Successfully loaded {len(stops)} stops")
         except FileNotFoundError:
-            print(f"错误: 找不到文件 {filepath}")
+            print(f"Error: File not found: {filepath}")
         except Exception as e:
-            print(f"加载站点时出错: {e}")
+            print(f"Error loading stops: {e}")
         
         return stops
 
     def _load_routes(self, filepath: str) -> List[Route]:
         """
-        从CSV文件加载路线数据
-        CSV格式: start_id,end_id,duration,cost,mode
+        Load route data from a CSV file.
+        CSV format: start_id,end_id,duration,cost,mode
         """
         routes = []
         try:
             with open(filepath, 'r', encoding='utf-8') as file:
                 csv_reader = csv.DictReader(file)
                 for row in csv_reader:
-                    # 先创建临时的Stop对象，后面build_network时会替换
+                    # Create temporary Stop objects and replace them in build_network.
                     start_stop = Stop(row['start_id'].strip(), "")
                     end_stop = Stop(row['end_id'].strip(), "")
                     
@@ -47,31 +47,31 @@ class FileLoader:
                         end=end_stop,
                         duration=float(row['duration']),
                         cost=float(row['cost']),
-                        mode=Mode[row['mode']]  # 将字符串转换为Enum
+                        mode=Mode[row['mode']]  # Convert string to Enum.
                     )
                     routes.append(route)
-            print(f"成功加载 {len(routes)} 条路线")
+            print(f"Successfully loaded {len(routes)} routes")
         except FileNotFoundError:
-            print(f"错误: 找不到文件 {filepath}")
+            print(f"Error: File not found: {filepath}")
         except KeyError as e:
-            print(f"CSV文件格式错误: 缺少列 {e}")
+            print(f"CSV format error: Missing column {e}")
         except Exception as e:
-            print(f"加载路线时出错: {e}")
+            print(f"Error loading routes: {e}")
         
         return routes
     
     def _validate_network(self, stops: List[Stop], routes: List[Route]) -> bool:
         """
-        验证网络数据的完整性
-        - 确保所有路线的起点和终点都在站点列表中
+        Validate network data integrity.
+        - Ensure all route start/end points exist in the stop list.
         """
         stop_ids = {stop.id for stop in stops}
         for route in routes:
             if route.start.id not in stop_ids:
-                print(f"错误: 路线起点 {route.start.id} 不在站点列表中")
+                print(f"Error: Route start stop {route.start.id} is not in the stop list")
                 return False
             if route.end.id not in stop_ids:
-                print(f"错误: 路线终点 {route.end.id} 不在站点列表中")
+                print(f"Error: Route end stop {route.end.id} is not in the stop list")
                 return False
         return True
 
@@ -79,11 +79,11 @@ class FileLoader:
         stops: List[Stop] = self._load_stops(stops_file)
         routes: List[Route] = self._load_routes(routes_file)
         if not self._validate_network(stops, routes):
-            print("网络数据验证失败")
+            print("Network data validation failed")
             return None
 
-        # 将路线中的临时 Stop 替换为网络中的真实 Stop 对象，
-        # 避免后续按对象比较时无法匹配到任何出发路线。
+        # Replace temporary Stop objects with actual Stop objects from the network
+        # to ensure object-based comparisons can correctly match outgoing routes.
         stop_by_id = {stop.id: stop for stop in stops}
         for route in routes:
             route.start = stop_by_id[route.start.id]
