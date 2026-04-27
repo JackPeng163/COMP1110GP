@@ -1,7 +1,7 @@
 import csv
 from typing import List
 
-from network import Mode, Route, Stop, Network
+from src.network import Mode, Route, Stop, Network
 
 
 class FileLoader:
@@ -81,5 +81,13 @@ class FileLoader:
         if not self._validate_network(stops, routes):
             print("网络数据验证失败")
             return None
+
+        # 将路线中的临时 Stop 替换为网络中的真实 Stop 对象，
+        # 避免后续按对象比较时无法匹配到任何出发路线。
+        stop_by_id = {stop.id: stop for stop in stops}
+        for route in routes:
+            route.start = stop_by_id[route.start.id]
+            route.end = stop_by_id[route.end.id]
+
         network = Network(stops=stops, routes=routes)
         return network

@@ -4,12 +4,16 @@ from src.network import Network
 
 
 def main():
-    # Load the network from files
-    # network: Network = FileLoader().build_network("stops.csv", "routes.csv")
+    # Load default test network so the app can run immediately.
+    network = FileLoader().build_network(
+        "test_cases/1/stops.csv",
+        "test_cases/1/routes.csv"
+    )
+    if network is None:
+        print("Failed to load default network, starting with an empty network.")
+        network = Network()
 
-    # Create the menu and run it
-    # menu: Menu = Menu(network)
-    menu: Menu = Menu(Network())
+    menu: Menu = Menu(network)
     menu.run()
     
 if __name__ == "__main__":

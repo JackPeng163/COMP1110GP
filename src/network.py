@@ -41,7 +41,7 @@ class Route:
         return self.cost
     
     def get_mode(self) -> Mode:
-        return self.mode
+        return self.mode.name
 
 
 class Network:
