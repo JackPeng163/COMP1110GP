@@ -4,13 +4,9 @@ from typing import List
 from src.journey_generator import Journey
 
 class Weight(Enum):
-    #时间优先
     TIME_PREFERENCE = [0.6, 0.3, 0.1] #Time, Cost, Transfers
-    #费用优先
     COST_PREFERENCE = [0.3, 0.6, 0.1]
-    #换乘次数优先
     TRANSFERS_PREFERENCE = [0.25, 0.25, 0.5]
-    #时间与费用均衡
     BALANCED_PREFERENCE = [0.4525, 0.4525, 0.05]
 
 class Ranker:
