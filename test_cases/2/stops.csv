@@ -1,11 +1,9 @@
 id,name
-S001,Central Station
-S002,City Hall
-S003,Tech Park
-S004,University
-S005,Airport
-S006,Railway Station
-S007,Sports Center
-S008,Commercial Hub
-S009,Museum District
-S010,Harbor
+S001,中央车站
+S002,市政广场
+S003,科技园区
+S004,大学城
+S005,机场
+S006,火车站
+S007,体育中心
+S008,商业中心

@@ -14,6 +14,15 @@ class MenuOption(Enum):
     LOAD_NETWORK = auto()
     EXIT = auto()
 
+options = {
+    1: MenuOption.LIST_STOPS,
+    2: MenuOption.BALANCED_JOURNEY,
+    3: MenuOption.LEAST_TIME_JOURNEY,
+    4: MenuOption.LEAST_COST_JOURNEY,
+    5: MenuOption.LOAD_NETWORK,
+    6: MenuOption.EXIT
+}
+
 class Menu:
     def __init__(self, network: Network):
         self.network = network
@@ -26,16 +35,18 @@ class Menu:
         os.system("cls" if os.name == "nt" else "clear")
 
     def _pause(self):
-        input("\nPress Enter to continue...")
-        self._clear_screen()
+        input("\nPress enter to continue...")
 
     def _find_stops_by_name(self, stop_name: str):
+        # User-facing input now uses stop names instead of IDs. This helper
+        # performs a case-insensitive exact-name match against all loaded stops.
         target = stop_name.strip().lower()
         if not target:
             return []
         return [stop for stop in self.network.get_all_stops() if stop.get_name().strip().lower() == target]
 
     def _format_stop(self, stop_id: str) -> str:
+        # Convert an internal stop ID back into a display-friendly stop name.
         try:
             stop = self.network.get_stop_by_id(stop_id)
             return stop.get_name()
@@ -43,6 +54,7 @@ class Menu:
             return stop_id
 
     def _prompt_valid_stop_name(self, prompt: str) -> str:
+        # Repeatedly ask the user for a stop name until it can be resolved to exactly one stop.
         while True:
             stop_name = input(prompt).strip()
             if not stop_name:
@@ -52,12 +64,17 @@ class Menu:
             if len(matched) == 1:
                 return matched[0].get_id()
             if len(matched) > 1:
+                # Ambiguous names are rejected so later queries cannot silently
+                # choose the wrong stop.
                 print(f"Found {len(matched)} stops named '{stop_name}', please enter a unique stop name.")
                 print("Matches:", ", ".join(f"{stop.get_name()}({stop.get_id()})" for stop in matched))
                 continue
             print(f"Unknown stop name: {stop_name}. Please try again.")
 
     def _journey_signature(self, journey) -> tuple:
+        # Build a stable tuple representation of a journey so the menu can
+        # detect duplicates before printing. This is a presentation-layer
+        # safety net in case upstream generation/ranking returns repeated paths.
         return tuple(
             (
                 route.get_start().get_id(),
@@ -70,6 +87,9 @@ class Menu:
         )
 
     def _get_user_choice(self) -> MenuOption:
+        # Keep asking until the user enters a valid menu number. The mapping is
+        # centralized here so the rest of the menu loop can work with enum
+        # values instead of raw integers.
         while True:
             try:
                 choice = int(input("Enter your choice (1-6): ").strip())
@@ -86,6 +106,8 @@ class Menu:
                 print("Invalid choice. Please enter a number between 1 and 6.")
     
     def _display_menu(self):
+        # Show a compact status header before the available actions so the user
+        # always knows how many stops are currently loaded in memory.
         print("\n=== Journey Planner ===")
         print(f"Loaded stops: {len(self.network.get_all_stops())}")
         print("------------------------")
@@ -97,6 +119,8 @@ class Menu:
         print("6. Exit")
 
     def _list_stops(self):
+        # Stop names are sorted alphabetically to make manual lookup easier
+        # when the user wants to type a name in a later query.
         try:
             stops = sorted(self.network.get_all_stops(), key=lambda s: s.get_name().lower())
             if not stops:
@@ -131,9 +155,15 @@ class Menu:
             print(f"No path found from {self._format_stop(start_id)} to {self._format_stop(end_id)}.")
             return
 
-        named_path = [self._format_stop(stop_id) for stop_id in path]
-        print(f"Route: {' -> '.join(named_path)}")
+        named_path = [self._format_stop(stop_id) for stop_id in path] #Convert the path to a list of stop names.
+
+        # Print the path in a readable format.
+        print("Route: ", end="")
+        for stop in named_path[:-1]:
+            print(stop, end=" -> ")
+        print(named_path[-1])
         print(f"{metric_label}: {total}")
+        print("-" * 40)
 
     def _query_journeys(self):
         start_id = self._prompt_valid_stop_name("Enter the start stop name: ")
@@ -142,42 +172,41 @@ class Menu:
             print("Start and end are the same stop.")
             return
 
-        preference = input("Preference (time/cost/transfer/balanced, default balanced): ").strip().lower()
+        preference = input("Preference (t: time, c: cost, r: transfer, b: balanced, default balanced): ").strip().lower()
 
         self._clear_screen()
 
         try:
             print(f"Querying journeys from {self._format_stop(start_id)} to {self._format_stop(end_id)}")
             journeys = self.journey_generator.generate(self.network.get_stop_by_id(start_id), self.network.get_stop_by_id(end_id))
-            if preference == "time":
+
+            # Translate the user's preference string into a predefined weight
+            # profile used by the ranking module.
+            if preference in ("t", "time"):
                 weight = Weight.TIME_PREFERENCE
-            elif preference == "cost":
+            elif preference in ("c", "cost"):
                 weight = Weight.COST_PREFERENCE
-            elif preference in ("transfer", "transfers"):
-                weight = Weight.TRANSFERS_PREFERENCE
+            elif preference in ("r", "transfer", "transfers"):
+                weight = Weight.TRANSFERS_PREFERENC
             else:
                 weight = Weight.BALANCED_PREFERENCE
+            
+            # Rank the journeys using the selected weight profile.
             journeys = self.journey_ranker.rank(journeys, weight)
+
+            # If no journeys are found, print a message and return.
             if not journeys:
                 print("No journeys found.")
                 return
 
-            # Defensive dedupe at display layer to prevent repeated output blocks.
-            unique_journeys = []
-            seen_signatures = set()
-            for journey in journeys:
-                signature = self._journey_signature(journey)
-                if signature in seen_signatures:
-                    continue
-                seen_signatures.add(signature)
-                unique_journeys.append(journey)
-
-            print(f"Found {len(unique_journeys)} journeys")
-            for index, journey in enumerate(unique_journeys, start=1):
+            # Print the journeys in a readable format.
+            print(f"Found {len(journeys)} journeys")
+            for index, journey in enumerate(journeys, start=1):
                 print(f"\n[{index}] Duration: {journey.total_duration()}, Cost: {journey.total_cost()}, Transfers: {journey.num_transfers()}")
                 for route in journey.get_routes():
+                    # Each route is printed as one leg in the overall journey.
                     print(
-                        f"  - {route.get_start().get_name()} -> {route.get_end().get_name()} "
+                        f"  - {route.get_start().get_name()} -> {route.get_end().get_name()} ",
                         f"(Duration: {route.get_duration()}, Cost: {route.get_cost()}, Mode: {route.get_mode()})"
                     )
                 print("-" * 40)
@@ -185,34 +214,45 @@ class Menu:
             print(f"Error querying journeys: {e}")
 
     def _load_network(self):
+        # Load one of the prepared CSV datasets from the test_cases folder.
+        # After loading, recreate the generator so future journey queries use
+        # the new network instead of the old cached reference.
         network_file = input("Enter network id under test_cases (e.g. 1, 2): ").strip()
-        if not network_file:
-            print("Network id cannot be empty.")
-            return
+            
         try:
             loaded_network = self.file_loader.build_network(
                 f"test_cases/{network_file}/stops.csv",
                 f"test_cases/{network_file}/routes.csv"
             )
+
             if loaded_network is None:
                 print("Failed to load network.")
                 return
+            
+            # Update the network and generator to use the new network.
             self.network = loaded_network
-            # Keep generator in sync with the latest loaded network.
             self.journey_generator = Generator(self.network)
+
+            # Print the number of stops in the new network.
             print(f"Network loaded successfully. Stops: {len(self.network.get_all_stops())}")
         except Exception as e:
             print(f"Error loading network: {e}")
 
     def _exit(self):
+        # Mark the main loop as finished so run() can exit cleanly.
         print("Exiting the Journey Planner. Goodbye!")
         self.running = False
 
     def run(self):
+        # Main event loop for the CLI application. Each iteration shows the
+        # menu, dispatches one action, and pauses before the next iteration.
         self._clear_screen()
         print("Welcome to the Journey Planner!")
+        self._pause()
         
         while self.running:
+            self._clear_screen()
+
             self._display_menu()
             choice = self._get_user_choice()
 
