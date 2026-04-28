@@ -80,8 +80,10 @@ class Generator:
                     continue
                 if (other.total_duration() <= journey.total_duration() and 
                     other.total_cost() <= journey.total_cost() and
+                    other.num_transfers() <= journey.num_transfers() and
                     (other.total_duration() < journey.total_duration() or 
-                     other.total_cost() < journey.total_cost())):
+                     other.total_cost() < journey.total_cost() or
+                     other.num_transfers() < journey.num_transfers())):
                     is_dominated = True
                     break
             if not is_dominated:
