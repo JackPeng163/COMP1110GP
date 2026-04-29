@@ -1,0 +1,184 @@
+COMP1110 Project- Research Component of the Intelligent Public Transport Advisor
+一、In-Depth Multi-Dimensional Analysis of the Basic Information of Four Mainstream Tools
+1. Google Maps
+Basic Positioning and Operating Entity
+A global one-stop geographic information and travel navigation tool developed by Google LLC, covering more than 220 countries and regions worldwide with full coverage of all transport modes in Hong Kong. As the industry benchmark for globally universal travel tools, its core positioning is "a one-stop travel solution for all scenarios, all regions, and all travel modes".
+Target User Segmentation (Hong Kong Context)
+User level	Accurate images	Core use demands
+Core target users	Global users with cross-regional/cross-border travel needs, young commuters aged 18-35 who are accustomed to one-stop multi-mode travel in Hong Kong, and tourists visiting Hong Kong (accounting for more than 60% of Hong Kong scene users)	Globally used standardized travel experience, multi-mode combination planning, and visual navigation
+Secondary users	Daily users in Hong Kong who have self-driving, walking, and cycling needs need multiple modes of transportation to connect with office workers	Door-to-door full-process route planning and real-time traffic dynamic adjustment
+Edge users	Elderly users in Hong Kong who only use a single mode of transportation (such as taking only green minibuses) and groups without the ability to operate smartphones with full functions	Minimalist single-line query, this group hardly uses the core functions of this tool
+Refined dismantling of core functions
+Core functions of basic route planning
+•	Transportation mode coverage: Hong Kong covers all modes of travel, including MTR, franchised buses, special minibuses, ferries, trams, taxis, walking, cycling, and self-driving, and supports single-mode and multi-mode free combination planning;
+•	Preference filtering capabilities: support four core preferences: fastest route, least transfer, most economical route, and minimum walking, customize departure/arrival time, and support additional filtering such as avoiding highways and toll sections;
+•	Basic information output: Each route synchronously outputs estimated time of arrival (ETA), total walking distance, total fare estimate, number of transfers, transportation mode of each section, stop details, operating hours, and congestion forecast.
+Differentiated features
+•	Multi-source real-time data fusion: Combine real-time congestion data on Hong Kong roads, MTR operation delay announcements, real-time bus arrival data, and historical travel big data to dynamically adjust ETA and route recommendations to adapt to sudden traffic conditions.
+•	Full-scene visual navigation: Support Hong Kong street view map, MTR station/large shopping mall indoor map, accurately mark the entrance and exit of the station and surrounding connection facilities, and assist users in completing offline navigation;
+•	Multilingual and cross-platform adaptation: Support 100+ languages such as Traditional Chinese, English, and Chinese Simplified Chinese, adapt to the needs of tourists visiting Hong Kong, and simultaneously support multi-terminal data synchronization on the web, mobile and in-vehicle terminals;
+•	Itinerary management capabilities: Support route sharing, intelligent reminders of departure times, and calendar itinerary synchronization to meet the needs of itinerary management in multiple scenarios such as business and tourism.
+The underlying design assumes deep excavation
+1.	User demand assumption: users' travel needs are diversified and will not be limited to a single mode of transportation, and the core demand is "one-stop all-scenario travel solution", rather than only special services for a certain type of transportation; 
+2.	Usage scenario assumption: The user's travel is not only a daily fixed commuting, but also includes multiple scenarios such as tourism, business, and cross-city/transnational travel, which requires a globally unified standardized experience while taking into account the adaptation of local traffic rules. 
+3.	Data priority assumption: users' trust in real-time dynamic data is much higher than that of fixed timetables, and dynamically adjusted routes are more valuable than fixed routes, so priority is given to the integration and calibration of multi-source real-time traffic data. 
+4.	User ability assumption: Users have basic smartphone operation ability, can understand the logic of multi-mode transfer, have a high acceptance of high-density information, and can accept a certain degree of operation complexity in exchange for the richness of functions. 
+Identify missing functions
+1.	Lack of core route planning
+￮	Hong Kong's local minibus routes are not fully covered, and the timetables and fare information of some rural and night routes are lagging behind, making it impossible to complete accurate minibus route planning.
+￮	The fare calculation only supports the total fare estimation, and does not support the accurate calculation of Hong Kong local Octopus transfer discounts, MTR monthly passes/student half-price/senior discounts, and the fare estimation error can reach 5%-20% in daily commuting scenarios. 
+￮	It does not support the **minimum road section" preference filter** required by the course, only supports "minimum transfers", which cannot match the core requirements of this project;
+￮	Multi-node route planning for custom route points is not supported, and only two-point planning from start to end is supported.
+2.	Lack of user experience and scene adaptation
+￮	The navigation accuracy of the entrances and exits of Hong Kong MTR stations is insufficient, the connection guidelines for multiple entrances and exits of some large stations and surrounding shopping malls are vague, and the transfers in the station are only described in text and there are no refined guidelines.
+￮	The offline function is extremely limited, the offline map only supports basic walking/self-driving navigation, and cannot complete the public transportation route planning offline, and can only view the cached route; 
+￮	The coverage of accessibility information is seriously insufficient, only some core MTR stations are marked with elevators, and the information on barrier-free facilities for buses, minibuses and ferries is almost blank, and the barrier-free route priority screening function is prioritized.
+
+2. City mapper
+Basic positioning and operating entity
+Hong Kong is one of the Asian cities it focuses on, positioned as an "urban public transport travel super APP", with a core focus on public transportation tracks and no self-driving navigation as its core function.
+Target User Stratification (Hong Kong Scenario)
+User level	Accurate images	Core use demands
+Core target users	Hong Kong's young office workers and students aged 20-40 are highly dependent on public transportation and pursue accurate, efficient and low-cost daily fixed commuting	Accurate fare calculation, real-time arrival reminders, multi-dimensional preference screening, and high-reliability transfer planning
+Secondary users	Visitors to Hong Kong who are familiar with smartphone operation need to avoid blind spots in local traffic rules and complete accurate public transportation travel	Localized route guidance, clear transfer instructions, and a pure experience with no additional spending
+Edge users	elderly users, users who only use self-driving travel, and groups without public transportation travel needs	Minimalist operation, single function, and extremely low penetration rate of this group
+Refined dismantling of core functions
+Core functions of basic route planning
+•	Transportation mode coverage: In-depth coverage of all modes of public transportation in Hong Kong, including MTR, franchised buses, green minibuses, ferries, trams, and taxis.
+•	Preference filtering capabilities: Support six refined preferences: fastest route, cheapest route, least transfer, least walking, most environmentally friendly, and most comfortable, and can customize to avoid specific modes of transportation (such as avoiding minibuses, avoiding ferries), and customizing the upper limit of walking distance;
+•	Basic information output: Each route synchronously outputs door-to-door ETA, accurate fare and total fare for each section, transfer walking distance and time, accurate arrival time at each station, operating time, congestion forecast, and details of transportation discounts that can be enjoyed.
+Differentiated features
+•	Accurate calculation of local transportation discounts in Hong Kong: It is the only product among general tools that supports the accurate calculation of Octopus transfer discounts, MTR morning and evening peak discounts, and student/elderly discounts, and the fare estimation error in daily commuting scenarios is ≤ 5%, which is much higher than the industry average. 
+•	Offline planning capabilities in all scenarios: Supports downloading complete public transportation data packages in Hong Kong, which can complete route planning, preference screening, and timetable query completely offline, without relying on the network, and adapts to the commuting scenario of Hong Kong's underground tunnels without signal.
+•	High-reliability transfer planning: dynamically adjust the transfer reservation time based on real-time operation data, automatically extend the transfer buffer time during peak periods, and prioritize ensuring the transfer success rate, avoiding the common problem of "insufficient transfer time reservation" in general tools;
+•	Real-time operation reminders: The real-time arrival of buses and MTR is accurate to the minute, and the real-time push of line diversion, operation delay, and temporary suspension information supports three core reminder functions: arrival reminder, transfer reminder, and last train reminder.
+The underlying design assumes deep excavation
+1.	User demand assumptions: The user's core mode of travel is public transportation, and the priority of public transportation accuracy, fare, and transfer experience is much higher than the coverage of other travel modes such as self-driving, and the core demand is to "make public transportation travel to the extreme"; 
+2.	Usage scenario assumptions: The user's core usage scenario is daily fixed commuting, not occasional scenarios such as travel, so it needs to be optimized for high-frequency commuting (such as congestion prediction, discount calculation, arrival reminder), rather than generalized function stacking. 
+3.	Data priority assumption: daily commuter users have extremely high requirements for fare accuracy, and will choose different routes because of the fare difference of a few Hong Kong dollars, so accurate fare calculation is the core competitiveness, and priority is given to the adaptation of local traffic rules and preferential systems; 
+4.	User capability assumption: The user is a local user who frequently uses public transportation, is familiar with local traffic rules, needs more refined filtering functions to adapt to personalized needs, and is willing to accept a certain information density for accuracy. 
+Identify missing functions
+1.	Lack of core route planning
+￮	It does not support the **minimum road section" preference filter** required by the course, only supports "minimum transfers", which cannot match the core requirements of this project;
+￮	The coverage of rural minibus routes in remote areas of Hong Kong is insufficient, and the precise planning of some suburban routes cannot be completed.
+￮	It does not support customizing multi-node route planning for multiple route points, and only supports two-point planning from start point to end.
+￮	Fare calculation only supports adult Octopus discounts, not MTR monthly passes, employee discounts and other special fare types.
+2.	Lack of user experience and scene adaptation
+￮	There is no indoor map and visual navigation function in the station, and the transfer in the MTR station is only a text description, and there is no route guidance and facility labeling.
+￮	The language adaptation only supports Traditional Chinese and English, and does not support Chinese Simplified, which is not friendly to mainland tourists.
+￮	The accessibility information only covers the basic information of elevators in MTR stations, and the information on barrier-free facilities for buses, minibuses and ferries is completely blank, and the barrier-free route priority screening function is empty.
+
+3. MTR Mobile
+Basic positioning and operating entity
+The MTR exclusive service APP officially launched by MTR Limited (MTR), the core service is the Hong Kong MTR network, and is the most used MTR exclusive tool in Hong Kong, covering the entire MTR heavy rail, light rail, airport express, intercity through train, and supporting the basic information services of MTR connecting transportation, which is the most authoritative official channel for MTR information.
+Target User Stratification (Hong Kong Scenario)
+User level	Accurate images	Core use demands
+Core target users	Hong Kong's daily commuters (office workers and students) with MTR as the core mode of travel account for more than 80% of the total number of users and are high-frequency users of MTR	MTR official authoritative operation information, accurate route planning, fare discount inquiry, station navigation
+Secondary users	Tourists visiting Hong Kong need to check the MTR lines, fares, and operating hours, and use the MTR to complete core travel	Clear route guidance, transfer instructions, and information around the station
+Edge users	Users who hardly use the MTR and only use buses and minibuses as their core mode of travel	There is no core demand, only occasional query of connection information
+Refined dismantling of core functions
+Core functions of basic route planning
+•	Transportation mode coverage: only supports the route planning of the entire MTR network (heavy rail, light rail, airport express, intercity through train), does not support cross-mode combination planning, and only provides basic information display of connecting transportation;
+•	Preference filtering capabilities: support three basic preferences: fastest route, minimum transfer, and minimum walking, customizable departure/arrival time, and support priority screening of barrier-free routes;
+•	Basic information output: Each route simultaneously outputs MTR official accurate ETA, accurate fares for all ticket types (one-way tickets/Octopus/student tickets/senior tickets/monthly passes), transfer stops, transfer walking time, first and last train times at each station, and carriage congestion prediction.
+Differentiated features
+•	MTR official authoritative real-time data: MTR operation delays, line failures, temporary diversions, and holiday schedule adjustments are pushed as soon as possible, and the data is 100% from the official, which is the most authoritative and accurate source of MTR information;
+•	Refined navigation in the station: Full coverage of the indoor map of the entire MTR station, supporting accurate navigation of entrances and exits, accurate positioning of facilities in the station (elevators, toilets, convenience stores, customer service centers, help buttons), and visual guidance of transfer routes;
+•	Full accessibility information coverage: 100% full coverage of barrier-free facilities at all MTR stations, including elevators, wheelchair seats, blind lanes, barrier-free toilets, and the precise location and real-time use status of help buttons, making it the most complete means of transportation in Hong Kong.
+•	Octopus full-link linkage: It supports binding Octopus, real-time inquiry of balance, consumption records, online recharge, and accurate calculation of all MTR official fare discounts, which is the only tool for zero error in MTR fare calculation.
+The underlying design assumes deep excavation
+1.	User demand assumption: the user's core mode of travel is the MTR, and other modes of transportation are only supplemented by the MTR, and the user's demand for the authority and accuracy of MTR information is much higher than the coverage of other modes of transportation, and the core demand is "MTR-related full-scenario services"; 
+2.	Usage scenario assumption: The user's core usage scenario is MTR travel, including daily commuting, weekend travel, and cross-regional travel, which requires full-link services around MTR rather than generalized travel planning. 
+3.	Data priority assumption: Users trust the official MTR data the most, and the authority of real-time operation information is the core lifeline, so all data comes from MTR officials and does not integrate third-party non-authoritative data; 
+4.	User capability assumption: Users cover all age groups, including elderly users and groups with low smartphone operation ability, so the operation logic of core functions is minimal, the information display is clear and intuitive, and the ease of use of core functions is prioritized over the richness of functions. 
+Identify missing functions
+1.	Lack of core route planning
+￮	It only supports route planning within the MTR network, and does not support cross-mode combination planning (such as door-to-door full-route planning of MTR + bus + minibus), which cannot meet the needs of complete commuting scenarios. 
+￮	It does not support the two core preferences of "cheapest" and "least road section" required by the course, and only supports the fastest, least transfers, and least walking, which cannot match the core needs of this project.
+￮	Unable to plan non-MTR travel routes, completely unapplicable to users who only use buses and minibuses;
+￮	Multi-node route planning for custom route points is not supported, and only two-point planning from start to end is supported.
+2.	Lack of user experience and scene adaptation
+￮	The offline function only supports MTR timetable and station information query, and does not support offline route planning; 
+￮	The connecting traffic information of non-MTR is only a basic display, and there is no real-time arrival, fare calculation, and route planning functions;
+￮	The cross-city route only supports MTR intercity through trains, and does not support public transportation planning from Hong Kong to other cities in the Mainland.
+
+4. HKBUS. APP
+Basic positioning and operating entity
+Edge users	Users who hardly use buses and only use MTR as their core mode of travel	There is no core demand, only occasional inquiries about shuttle bus information
+Refined dismantling of core functions
+Core functions of basic route planning
+•	Transportation mode coverage: only supports route planning of franchised buses and green minibuses of all operators in Hong Kong, does not support cross-mode combination planning, and only provides basic information display of MTR connections;
+•	Preference filtering capabilities: support the fastest route, minimum transfers, and minimum walking three basic preferences, customize departure/arrival times, and filter specific bus operator routes;
+•	Basic information output: Each route synchronously outputs bus accurate ETA, single-line sectional fares, number of transfers, real-time arrival time of each station (accurate to seconds), first and last train times, and route diversion information.
+Differentiated features
+•	Real-time arrival data of all buses: The real-time arrival data of all bus operators in Hong Kong is fully covered, and the arrival time is accurate to the second, making it the most comprehensive and accurate tool for real-time bus data in Hong Kong.
+•	Real-time update of route operation dynamics: The update speed of information on temporary bus route diversions, operation adjustments, holiday frequency changes, and temporary cancellations of stations far exceeds that of general tools, and is the most timely channel for bus operation information in Hong Kong.
+•	Exclusive optimization for commuting scenarios: support collecting commonly used bus routes, setting arrival reminders and last train reminders, and support real-time location visualization of buses to adapt to the core needs of users waiting for the bus.
+•	Adaptation for all ages: Support large fonts, high contrast simple mode, simple operation logic, one-click direct access to core functions, suitable for elderly users and groups with low smartphone operating ability.
+The underlying design assumes deep excavation
+1.	User demand assumption: The user's core travel mode is buses and minibuses, and the demand for the accuracy of real-time bus arrival information and comprehensive route coverage is much higher than that of other modes of transportation. 
+2.	Usage scenario assumption: The core usage scenario of users is the daily commuting of buses, and the core issue that users are most concerned about is "how long will the bus arrive at the station", so real-time arrival data is the core competitiveness of the product, and all functions are designed around this core requirement. 
+3.	Data priority assumptions: buses are greatly affected by road congestion, the reference value of fixed timetables is limited, and users' demand for real-time dynamic data is the highest priority, so priority is given to integrating the official real-time data sources of all bus operators to ensure the accuracy and timeliness of the data; 
+4.	User capability assumption: Users cover all age groups, including elderly users who are not familiar with smartphone operation, so the core functions are minimally operated and simple mode is supported to minimize the threshold for use, rather than pursuing the richness of functions. 
+Identify missing functions
+1.	Lack of core route planning
+￮	It only supports transfer planning between bus and minibus lines, and does not support cross-mode combination planning, which cannot meet the needs of complete door-to-door commuting scenarios. 
+￮	It does not support the two core preferences of "cheapest" and "least road section" required by the course, and only supports the fastest, least transfers, and least walking, which cannot match the core needs of this project.
+￮	The fare calculation only supports single-line sectional fares, not Octopus bus transfer discounts, and the total fare estimation error can reach 10%-15% in multi-line transfer scenarios; 
+￮	Multi-node route planning for custom route points is not supported, and only two-point planning from start to end is supported.
+2.	Lack of user experience and scene adaptation
+￮	Without any offline function, all route planning and real-time data query need to be networked, and it cannot be used in the environment without network.
+￮	The accessibility information is almost blank, only a few low-floor bus lines are marked with wheelchair seats, and more than 95% of the lines and stations do not have any barrier-free information, and the barrier-free route screening function;
+￮	There is no indoor map and site entrance and exit navigation function, only the site name display is supported, and there is no visual navigation and connection guidance.
+
+1.2 Research summary
+Design ideas that can be used in existing tools include:
+1.	Hierarchical functional design: Focusing on the core needs of different user groups, giving priority to coverage breadth for general tools and in-depth local services for vertical tools, which provides a reference for the functional focus of this project, which can focus on the core route planning functions for the basic needs of students/local commuting. 
+2.	Multi-dimensional route preferences: Mainstream tools allow users to filter and sort routes according to different travel preferences (fastest/cheapest/least transfers), which is completely in line with the needs of this project, and can learn from its design idea of using different cost dimensions as the basis for sorting. 
+3.	Clear transfer guidance: Mature tools will provide detailed transfer details to help users reduce the cognitive burden of transfers, which can be used as a reference in the route output of this project, and clearly mark the transfer points and road section information for users. 
+At the same time, there are some design issues with existing tools:
+1.	Contradiction in functional trade-offs: Most tools cannot take into account the breadth of coverage and the depth of local services, the local details of general tools are insufficient, and the functions of vertical tools are too limited, resulting in users often needing to switch multiple apps to complete the itinerary planning. 
+2.	Offline experience is uneven: The offline function of most tools can only meet basic queries and cannot support complete offline route planning, but this project is designed based on static data, which can naturally support complete offline use, which can make up for this experience shortcoming. 
+
+2. Definition of the problem framework
+2.1 Core Entity Definitions
+To model the commuting problem as a computational problem, this project clearly defines the core entities:
+1.	Stops: nodes in the public transportation network, which are the locations of passengers getting on and off the bus, each station has a unique identity and name, which can be shared by different transportation lines, and is the basic node of route planning. 
+2.	Segments: Edges in the public transportation network, connecting two adjacent stations, representing one-way traffic sections between two stations, belonging to a specific traffic line, and being the basic unit of traffic in the network. 
+3.	Cost: The fare that passengers need to pay for this section of the journey, in Hong Kong dollars, is used to calculate the total fare of the entire trip and is the core calculation basis for the "cheapest" preference. 
+4.	Duration: The time it takes for passengers to pass through this section, in minutes, is a static preset travel time used to calculate the total time spent on the entire trip, and is the core calculation basis for the "fastest" preference. 
+5.	Journey: A complete travel plan from the starting point to the end station, consisting of a series of orderly road sections, including transfer points, total cost, total duration, total number of road sections, number of transfers and other complete travel information. 
+6.	Preference Mode: The route sorting based on the user's choice, this project supports three core modes:
+￮	Cheapest: Prioritize the route with the lowest total fare based on the total cost of the trip
+￮	Fastest: Based on the total duration of the trip, the route with the shortest total time is recommended first
+￮	Minimum road section: Based on the total number of road sections of the itinerary (corresponding to the number of transfers), the route with the least transfer is recommended first, reducing the transfer burden of users
+2.2 Input and output definitions
+Enter the definition
+The inputs received by the program fall into two categories:
+1.	Network initialization input: Supports reading static data of the transportation network, including all station information and road section information, from the specified text file, completes the initialization of the transportation network, and supports input verification to ensure that the data format is legal. 
+2.	User query input:
+￮	Starting point: the user's departure station, supported by the station name or unique identifier, the program verifies that the stop exists in the current transportation network
+￮	Endpoint: The user's destination site, which also supports the site name or unique identifier, and the program verifies the validity of the site
+￮	Preferred Selection: The route sorting preference selected by the user, with the value of the cheapest/fastest/least section, the program verifies whether the input preference is a supported type
+Output definition
+The output of the program is the user's route query results, including:
+1.	Sorted Candidate Route List: All eligible candidate trips are sorted from highest to lowest priority according to the user's preferred preferences, and the routes that best meet the user's needs are prioritized. 
+2.	Details of individual routes:
+￮	Complete Stop Sequence: All stops passed in order from start to finish
+￮	Total Cost: The total fare for the entire route
+￮	Total Duration: The total time spent on the entire route
+￮	Road section and transfer information: the total number of sections of the route, as well as the corresponding number of transfers and transfer stops,
+ the program supports file output, and the query results can be saved to the specified text file for users to keep and view. 
+2.3 Delineation of functional boundaries
+In order to focus on core computational thinking and data model design, this project clearly delineates the functional boundaries, and the following functions will not be implemented in this program:
+1.	It does not provide a real-time map visualization interface, only supports text interactive information display, and does not provide graphical map or route visualization.
+2.	Real-time traffic data is not supported, and the duration and fare of all road sections are static data, regardless of real-time congestion, delays, temporary diversions and other dynamic changes.
+3.	It does not support cross-city route planning, but only supports route query of public transportation networks within a single city.
+4.	It does not support independent walking route planning, and only the walking between stations is used as an auxiliary part of the transfer, and the walking section is not modeled separately.
+5.	Dynamic estimated time of arrival (ETA) calculations are not supported, and all durations are static presets and are not dynamically adjusted based on the current time.
+6.	Accessibility-related route filtering is not supported, and accessibility-related information is not included in the simplified model of this project.
+7.	It does not support complex multi-destination route planning, and only supports single-point-to-single-point start-end route query.
+8.	It does not support ticketing and payment-related functions, only provides fare estimate information, and does not support actual ticket purchase and payment operations.
+9.	It does not support personalized data storage, and cannot save personalized information such as frequently used routes and historical queries.
+10.	Cross-device synchronization is not supported, and all data is only effective when the local program is running.
+
