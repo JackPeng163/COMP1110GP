@@ -187,7 +187,7 @@ class Menu:
             elif preference in ("c", "cost"):
                 weight = Weight.COST_PREFERENCE
             elif preference in ("r", "transfer", "transfers"):
-                weight = Weight.TRANSFERS_PREFERENC
+                weight = Weight.TRANSFERS_PREFERENCE
             else:
                 weight = Weight.BALANCED_PREFERENCE
             
