@@ -60,6 +60,10 @@ class Menu:
             if not stop_name:
                 print("Stop name cannot be empty.")
                 continue
+            if stop_name.lower() == "list":
+                self._list_stops()
+                self._pause()
+                continue
             matched = self._find_stops_by_name(stop_name)
             if len(matched) == 1:
                 return matched[0].get_id()
@@ -68,9 +72,11 @@ class Menu:
                 # choose the wrong stop.
                 print(f"Found {len(matched)} stops named '{stop_name}', please enter a unique stop name.")
                 print("Matches:", ", ".join(f"{stop.get_name()}({stop.get_id()})" for stop in matched))
+                print("(Hint: type 'list' to see all stop names)")
                 continue
             print(f"Unknown stop name: {stop_name}. Please try again.")
-
+            print("(Hint: type 'list' to see all stop names)")
+    
     def _journey_signature(self, journey) -> tuple:
         # Build a stable tuple representation of a journey so the menu can
         # detect duplicates before printing. This is a presentation-layer
