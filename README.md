@@ -1,14 +1,15 @@
 # Journey Planner
 
 ## Contributors
+**Group:** G18
 
 | Name         | UID         |
 |--------------|-------------|
 | Peng Tsz Yiu | 3036666290  |
 | Wang Yujin   | 3036481999  |
 | Li Zhao Tian | 3033120221  |
-| Han Jiale    | 
-| Lu Xinqi     | 
+| Han Jiale    | 3036390279  |
+| Lu Xinqi     | 3036480696  |
 
 
 A Python command-line journey planning application for exploring routes in a transport network.  
