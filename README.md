@@ -1,5 +1,16 @@
 # Journey Planner
 
+## Contributors
+
+| Name         | UID         |
+|--------------|-------------|
+| Peng Tsz Yiu | 3036666290  |
+| Wang Yujin   | 3036481999  |
+| Li Zhao Tian | 3033120221  |
+| Han Jiale    | 
+| Lu Xinqi     | 
+
+
 A Python command-line journey planning application for exploring routes in a transport network.  
 The project loads stop and route data from CSV files, builds an in-memory network model, and allows users to:
 
